@@ -14,7 +14,7 @@
 #         NOTES:  ---
 #        AUTHOR:  Samuel Bucquet
 #       COMPANY:  DGA/GESMA
-#       LICENSE:  GPL see 'LICENSE.TXT'
+#       LICENSE:  GPLv2 see 'LICENSE.TXT'
 #       VERSION:  ---
 #       CREATED:  10-09-2013
 #      MODIFIED:  ---
