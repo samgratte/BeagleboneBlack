@@ -12,7 +12,7 @@
 #  REQUIREMENTS:  ---
 #          BUGS:  ---
 #         NOTES:  ---
-#        AUTHOR:  Samuel Bucquet
+#        AUTHOR:  Samuel Bucquet - samuel.bucquet@gmail.com
 #       COMPANY:  DGA/GESMA
 #       LICENSE:  GPLv2 see 'LICENSE.TXT'
 #       VERSION:  ---
