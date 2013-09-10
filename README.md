@@ -1,6 +1,9 @@
 BeagleboneBlack
 ===============
 
+## Dépendances/Depends on
+* Python: smbus,plac
+
 ### Français
 Ensemble de code de gestion des Interfaces du BeagleBoneBlack en Python et C
 
