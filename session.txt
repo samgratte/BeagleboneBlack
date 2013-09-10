@@ -1,0 +1,32 @@
+spartan@arm:~/work/ParaSAS/BBB_MCP4725$ ./test_dac.py -h
+usage: test_dac.py [-h] [-p] [-b 1] [-a 0x60] [-vRef 3.3] {read,write} [value]
+
+positional arguments:
+  {read,write}          Action à réaliser sur le DAC
+  value                 Valeur sur 12 bits à écrire sur le DAC
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -p, --persistent      Sauver la valeur écrite dans l'EEPROM du DAC
+  -b 1, --bus 1         Indice du bus i2c à utiliser
+  -a 0x60, --address 0x60
+                        Adresse du DAC sur le bus i2c
+  -vRef 3.3             Tension de référence envoyée au DAC
+spartan@arm:~/work/ParaSAS/BBB_MCP4725$ ./test_dac.py read
+        C0 1C B0 01 CB
+        Ready=True|PowerOnReset=True|PowerDown=0
+        DAC_Register=459|EEPROM_Data=459
+
+spartan@arm:~/work/ParaSAS/BBB_MCP4725$ ./test_dac.py write 1567
+spartan@arm:~/work/ParaSAS/BBB_MCP4725$ ./test_dac.py read
+        C0 61 F0 01 CB
+        Ready=True|PowerOnReset=True|PowerDown=0
+        DAC_Register=1567|EEPROM_Data=459
+
+spartan@arm:~/work/ParaSAS/BBB_MCP4725$ ./test_dac.py write 1567 -p
+spartan@arm:~/work/ParaSAS/BBB_MCP4725$ ./test_dac.py read
+        C0 61 F0 06 1F
+        Ready=True|PowerOnReset=True|PowerDown=0
+        DAC_Register=1567|EEPROM_Data=1567
+
+spartan@arm:~/work/ParaSAS/BBB_MCP4725$
