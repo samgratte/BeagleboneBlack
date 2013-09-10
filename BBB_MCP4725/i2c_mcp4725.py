@@ -1,5 +1,26 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+#==========================================================================
+#
+#          FILE:  i2c_mcp4725.py
+# 
+#         USAGE:  ---
+# 
+#   DESCRIPTION:  ---
+# 
+#       OPTIONS:  ---
+#  REQUIREMENTS:  ---
+#          BUGS:  ---
+#         NOTES:  ---
+#        AUTHOR:  Samuel Bucquet
+#       COMPANY:  DGA/GESMA
+#       LICENSE:  GPL see 'LICENSE.TXT'
+#       VERSION:  ---
+#       CREATED:  10-09-2013
+#      MODIFIED:  ---
+#      REVISION:  1
+#==========================================================================
+
 
 from math import ceil
 
