@@ -5,7 +5,6 @@
 # Date     : 2014.10.27
 # License  : GPLv2
 
-import sys
 from itertools import izip
 from bbb_ain import BBB_AIN
 from shareddata import SharedMemory, DataDict, Waiting, fatal_error
@@ -23,7 +22,7 @@ import plac
     adc_nums=("Numéro de l'ADC utilisé en entrée (de 0 à 7) (plusieurs peuvent être indiqués)", 'positional', None, int, None, 'AIN')
 )
 def main(data_name, ain_max=4096, frequency=1, redis_server='redissrv',
-         redis_port=6379, app_name=sys.argv[0], env_init=None, *adc_nums):
+         redis_port=6379, app_name=None, env_init=None, *adc_nums):
 
     # Initialisation des AINs
     if len(adc_nums) < 1:

@@ -5,7 +5,6 @@
 # Date     : 2014.10.27
 # License  : GPLv2
 
-import sys
 from bbb_dac import DAC12
 from shareddata import SharedMemory, DataDict, fatal_error
 import plac
@@ -32,7 +31,7 @@ def main(data_name, maximum=100.0, frequency=-1, redis_server='redissrv',
     # Connexion à la SHM
     with SharedMemory(redis_server, redis_port, env_init) as shm:
         # Déclaration
-        dd = DataDict(sys.argv[0], shm)
+        dd = DataDict(None, shm)
         data_listen = dd.listen_to_datas([data_name])
         # on attend que la donnée soit rafraichît
         for (data,) in data_listen:

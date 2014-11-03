@@ -5,9 +5,9 @@
 # Date     : 2014.10.27
 # License  : GPLv2
 
-import sys
 from bbb_gpio import BBB_GPIO_IN
-from shareddata import SharedMemory, DataDict, Waiting, fatal_error
+from shareddata import SharedMemory, DataDict
+from shareddata import Waiting, fatal_error
 import plac
 
 
@@ -27,8 +27,7 @@ import plac
               + " de la shm", 'option', 'i')
 )
 def main(data_name, gpio_num, active_low, gpio_edge='both', frequency=-1,
-         redis_server='redissrv', redis_port=6379, app_name=sys.argv[0],
-         env_init=None):
+         redis_server='redissrv', redis_port=6379, app_name=None, env_init=None):
 
     if not (gpio_edge is 'none') and frequency != -1:
         fatal_error("Impossible de satisfaire 'edge' à '%s' " % gpio_edge +
