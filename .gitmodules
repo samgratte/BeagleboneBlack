@@ -1,0 +1,3 @@
+[submodule "SimpleSHM"]
+	path = SimpleSHM
+	url = https://github.com/samgratte/SimpleSHM.git
