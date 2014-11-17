@@ -14,12 +14,16 @@ import plac
 @plac.annotations(
     data_name="Nom de la data dans la SHM",
     ain_max=('Valeur max de lecture de(s) AIN(s)', 'option', 'm', float),
-    frequency=("À quelle fréquence on interroge le(s) AIN(s)", 'option', 'f', int),
-    redis_server=("Nom ou @ IP de la cpu sur laquelle tourne Redis", 'option', 'r'),
+    frequency=("À quelle fréquence on interroge le(s) AIN(s)", 'option', 'f',
+               int),
+    redis_server=("Nom ou @ IP de la cpu sur laquelle tourne Redis", 'option',
+                  'r'),
     redis_port=("N° de port tcp pour se connecter à Redis", 'option', 'p', int),
     app_name=("Nom de l'application pour la SHM", 'option', 'a'),
-    env_init=("Nom de la variable d'environnement qui contient la data d'init de la shm", 'option', 'i'),
-    adc_nums=("Numéro de l'ADC utilisé en entrée (de 0 à 7) (plusieurs peuvent être indiqués)", 'positional', None, int, None, 'AIN')
+    env_init=("Nom de la variable d'environnement qui contient la data d'init"
+              + " de la shm", 'option', 'i'),
+    adc_nums=("Numéro de l'ADC utilisé en entrée (de 0 à 7) (plusieurs peuvent"
+              + "être indiqués)", 'positional', None, int, None, 'AIN')
 )
 def main(data_name, ain_max=4096, frequency=1, redis_server='redissrv',
          redis_port=6379, app_name=None, env_init=None, *adc_nums):
@@ -44,7 +48,7 @@ def main(data_name, ain_max=4096, frequency=1, redis_server='redissrv',
             periode.set_start()
             # envoi des données ains vers la SHM
             shm_ains.set(*ains, ts=periode.start_time)
-            dd.flush()
+            dd.write()
             periode.wait_next()
 
 if __name__ == '__main__':

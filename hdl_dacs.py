@@ -11,13 +11,18 @@ import plac
 
 
 @plac.annotations(
-    data_name="Nom de la data dans la SHM en écoute (elle doit avoir un champ value)",
+    data_name="Nom de la data dans la SHM en écoute (elle doit avoir un champ"
+              + " value)",
     maximum=('Maximum que peuvent prendre les données', 'option', 'm', float),
-    frequency=("À quelle fréquence on interroge le(s) AIN(s)", 'option', 'f', int),
-    redis_server=("Nom ou @ IP de la cpu sur laquelle tourne Redis", 'option', 'r'),
+    frequency=("À quelle fréquence on interroge le(s) AIN(s)", 'option', 'f',
+               int),
+    redis_server=("Nom ou @ IP de la cpu sur laquelle tourne Redis", 'option',
+                  'r'),
     redis_port=("N° de port tcp pour se connecter à Redis", 'option', 'p', int),
-    env_init=("Nom de la variable d'environnement qui contient la data d'init de la shm", 'option', 'i'),
-    dac_nums=("Numéro du DAC utilisé en entrée", 'positional', None, int, None, 'DAC')
+    env_init=("Nom de la variable d'environnement qui contient la data d'init"
+              + " de la shm", 'option', 'i'),
+    dac_nums=("Numéro du DAC utilisé en entrée", 'positional', None, int, None,
+              'DAC')
 )
 def main(data_name, maximum=100.0, frequency=-1, redis_server='redissrv',
          redis_port=6379, env_init=None, *dac_nums):

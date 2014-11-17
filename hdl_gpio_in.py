@@ -6,8 +6,7 @@
 # License  : GPLv2
 
 from bbb_gpio import BBB_GPIO_IN
-from shareddata import SharedMemory, DataDict
-from shareddata import Waiting, fatal_error
+from shareddata import SharedMemory, DataDict, Waiting, fatal_error
 import plac
 
 
@@ -19,19 +18,21 @@ import plac
                'option', 'e', str, ['none', 'rising', 'falling', 'both']),
     frequency=("À quelle fréquence on interroge le GPIO (lorsque on est non"
                + " bloquant)", 'option', 'f', int),
-    redis_server=("Nom ou @ IP de la cpu sur laquelle tourne Redis",
-                  'option', 'r'),
+    redis_server=("Nom ou @ IP de la cpu sur laquelle tourne Redis", 'option',
+                  'r'),
     redis_port=("N° de port tcp pour se connecter à Redis", 'option', 'p', int),
     app_name=("Nom de l'application pour la SHM", 'option', 'a'),
     env_init=("Nom de la variable d'environnement qui contient la data d'init"
               + " de la shm", 'option', 'i')
 )
 def main(data_name, gpio_num, active_low, gpio_edge='both', frequency=-1,
-         redis_server='redissrv', redis_port=6379, app_name=None, env_init=None):
+         redis_server='redissrv', redis_port=6379, app_name=None,
+         env_init=None):
 
     if not (gpio_edge is 'none') and frequency != -1:
-        fatal_error("Impossible de satisfaire 'edge' à '%s' " % gpio_edge +
-                    "(bloquant)\net 'frequency' à %d (non bloquant) !" % frequency)
+        fatal_error("Impossible de satisfaire 'edge' à '%s' " % gpio_edge
+                    + "(bloquant)\net 'frequency' à %d" % frequency
+                    + " (non bloquant) !")
     # Connexion à la SHM et Initialisation du GPIO
     with SharedMemory(redis_server, redis_port, env_init) as shm,\
             BBB_GPIO_IN(gpio_num, gpio_edge, active_low) as gpio_in:
@@ -44,7 +45,7 @@ def main(data_name, gpio_num, active_low, gpio_edge='both', frequency=-1,
             periode.set_start()
             # envoi des données ains vers la SHM
             shm_gpio.set(state, ts=periode.start_time)
-            dd.flush()
+            dd.write()
             periode.wait_next()
 
 if __name__ == '__main__':
