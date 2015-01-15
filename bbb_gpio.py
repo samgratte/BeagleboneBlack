@@ -40,15 +40,12 @@ class BBB_GPIO(object):
 
     def __init__(self, gpio_number, active_low=False, is_input=True):
         self.path = _sysfs_path + 'gpio%d/' % gpio_number
-        self.configure(is_input)
-        self._active_low = active_low
-        access_mode = 'r' if is_input else 'w'
-        self.fd = open(self.path+'value', access_mode, 0)
-
-    def configure_direction(self, is_input=True):
         direction = 'in' if is_input else 'out'
         # for direction 'out' it is set with the 'low' value by default
         open(self.path+'direction', 'w').write(direction)
+        self._active_low = active_low
+        access_mode = 'r' if is_input else 'w'
+        self.fd = open(self.path+'value', access_mode, 0)
 
     @property
     def active_low(self):
