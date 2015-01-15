@@ -73,7 +73,7 @@ class BBB_GPIO(object):
 class BBB_GPIO_OUT(BBB_GPIO):
 
     def __init__(self, gpio_number, active_low=False):
-        BBB_GPIO.__init(gpio_number, active_low, is_input=False)
+        BBB_GPIO.__init(self, gpio_number, active_low, is_input=False)
 
     def set(self):
         self.fd.write('1')
@@ -85,7 +85,7 @@ class BBB_GPIO_OUT(BBB_GPIO):
 class BBB_GPIO_IN(BBB_GPIO):
 
     def __init__(self, gpio_number, edge='both', active_low=False):
-        BBB_GPIO.__init__(gpio_number, active_low, is_input=True)
+        BBB_GPIO.__init__(self, gpio_number, active_low, is_input=True)
         self.read()
         self.edge = edge
 
