@@ -39,7 +39,7 @@ def main(gpio_number, action):
 class BBB_GPIO(object):
 
     def __init__(self, gpio_number, active_low=False, is_input=True):
-        self.path = self._sysfs_path + 'gpio%d/' % gpio_number
+        self.path = _sysfs_path + 'gpio%d/' % gpio_number
         self.configure(is_input)
         self._active_low = active_low
         access_mode = 'r' if is_input else 'w'
