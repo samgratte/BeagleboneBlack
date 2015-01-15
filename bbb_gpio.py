@@ -5,6 +5,10 @@
 # License : GPLv2
 
 from select import epoll, EPOLLPRI, EPOLLERR
+import plac
+
+
+_sysfs_path = '/sys/class/gpio/'
 
 
 def check_option(expected, option):
@@ -12,13 +16,38 @@ def check_option(expected, option):
         raise ValueError("%s is not in %s !" % (option, expected))
 
 
+def export(gpio_number):
+    open(_sysfs_path + 'export', 'w').write(str(gpio_number))
+
+
+def unexport(gpio_number):
+    open(_sysfs_path + 'unexport', 'w').write(str(gpio_number))
+
+
+@plac.annotations(
+    gpio_number=("Numéro de PIN GPIO", 'positional', None, int),
+    action=("'export' ou 'unexport'", 'positional', None, str, ['export', 'unexport'])
+)
+def main(gpio_number, action):
+    if action == 'export':
+        export(gpio_number)
+    else:  # unexport
+        unexport(gpio_number)
+
+
 class BBB_GPIO(object):
 
-    _sysfs_path = '/sys/class/gpio/'
-
-    def __init__(self, gpio_number, active_low=False):
+    def __init__(self, gpio_number, active_low=False, is_input=True):
         self.path = self._sysfs_path + 'gpio%d/' % gpio_number
+        self.configure(is_input)
         self._active_low = active_low
+        access_mode = 'r' if is_input else 'w'
+        self.fd = open(self.path+'value', access_mode, 0)
+
+    def configure_direction(self, is_input=True):
+        direction = 'in' if is_input else 'out'
+        # for direction 'out' it is set with the 'low' value by default
+        open(self.path+'direction', 'w').write(direction)
 
     @property
     def active_low(self):
@@ -40,12 +69,22 @@ class BBB_GPIO(object):
         self.close()
 
 
-class BBB_GPIO_IN(object):
+class BBB_GPIO_OUT(BBB_GPIO):
+
+    def __init__(self, gpio_number, active_low=False):
+        super().__init(gpio_number, active_low, is_input=False)
+
+    def set(self):
+        self.fd.write('1')
+
+    def unset(self):
+        self.fd.write('0')
+
+
+class BBB_GPIO_IN(BBB_GPIO):
 
     def __init__(self, gpio_number, edge='both', active_low=False):
-        super().__init__(gpio_number, active_low)
-        open(self.path+'direction', 'w').write('in')
-        self.fd = open(self.path+'value', 'r', 0)
+        super().__init__(gpio_number, active_low, is_input=True)
         self.read()
         self.edge = edge
 
@@ -98,3 +137,7 @@ class BBB_GPIO_IN(object):
     def close(self):
         self.ep.unregister(self.fd)
         self.fd.close()
+
+
+if __name__ == '__main__':
+    plac.call(main)
