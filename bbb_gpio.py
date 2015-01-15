@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 # --- bbb_gpio.py ---
 # Author  : samuel.bucquet@gmail.com
