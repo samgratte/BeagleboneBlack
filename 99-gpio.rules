@@ -1,1 +1,1 @@
-SUBSYSTEM=="gpio", ACTION=="add", PROGRAM="/bin/sh -c 'chown -R root:dialout /sys%p'"
+SUBSYSTEM=="gpio", ACTION=="add", PROGRAM="/bin/sh -c 'chown -R root:dialout /sys%p;chmod -R g+w /sys%p'"
