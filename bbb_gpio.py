@@ -52,7 +52,7 @@ class BBB_GPIO(object):
         return self._active_low
 
     @active_low.setter
-    def set_active_low(self, active_low=True):
+    def active_low(self, active_low=True):
         val = '1' if active_low else '0'
         open(self.path+'active_low', 'w').write(val)
         self._active_low = active_low
@@ -70,7 +70,7 @@ class BBB_GPIO(object):
 class BBB_GPIO_OUT(BBB_GPIO):
 
     def __init__(self, gpio_number, active_low=False):
-        BBB_GPIO.__init(self, gpio_number, active_low, is_input=False)
+        BBB_GPIO.__init__(self, gpio_number, active_low, is_input=False)
 
     def set(self):
         self.fd.write('1')
@@ -91,7 +91,7 @@ class BBB_GPIO_IN(BBB_GPIO):
         return self._edge
 
     @edge.setter
-    def set_edge(self, edge):
+    def edge(self, edge):
         check_option(('none', 'rising', 'falling', 'both'), edge)
         open(self.path+'edge', 'w').write(edge)
         self._edge = edge
@@ -102,7 +102,7 @@ class BBB_GPIO_IN(BBB_GPIO):
         return self._blocking
 
     @blocking.setter
-    def set_blocking(self, blocking=True):
+    def blocking(self, blocking=True):
         if blocking:
             self.ep = epoll()
             self.ep.register(self.fd, EPOLLPRI | EPOLLERR)
