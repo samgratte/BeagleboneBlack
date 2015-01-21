@@ -71,12 +71,21 @@ class BBB_GPIO_OUT(BBB_GPIO):
 
     def __init__(self, gpio_number, active_low=False):
         BBB_GPIO.__init__(self, gpio_number, active_low, is_input=False)
+        self.status = active_low
 
     def set(self):
         self.fd.write('1')
+        self.status = True
 
     def unset(self):
         self.fd.write('0')
+        self.status = False
+
+    def toggle(self):
+        if self.status:
+            self.unset()
+        else:
+            self.set()
 
 
 class BBB_GPIO_IN(BBB_GPIO):
